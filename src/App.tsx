@@ -1,13 +1,16 @@
-import { css } from "../styled-system/css";
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import routes from './routes'
 
 function App() {
-  return (
-    <div
-      className={css({ fontSize: "2xl", fontWeight: "bold", color: "cool" })}
-    >
-      Hello 🐼!
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                {routes.map(({ path, Component }) => (
+                    <Route key={path} path={path} Component={Component} />
+                ))}
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
-export default App;
+export default App
