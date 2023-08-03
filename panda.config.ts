@@ -12,7 +12,18 @@ export default defineConfig({
 
   // Useful for theme customization
   theme: {
-    extend: {},
+    extend: {
+      tokens: {
+        colors: {
+          primary: { value: "#89d9d6" },
+          secondary: { value: "#163e59" },
+          tinder: {
+            primary: { value: "#E94463" },
+            secondary: { value: "#F3A361" },
+          },
+        },
+      },
+    },
   },
 
   // The output directory for your css system
