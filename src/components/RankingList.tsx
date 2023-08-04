@@ -75,7 +75,8 @@ const RankingList = ({ type }: Props) => {
                     borderBottom: '2px solid',
                     pb: '10px',
                     gap: '10px',
-                })}>
+                })}
+                key={item.username}>
                 <HStack>
                     <span>{index + 1} -</span>
                     <img
@@ -83,7 +84,7 @@ const RankingList = ({ type }: Props) => {
                         className={css({
                             height: PROFILE_SIZE,
                             width: PROFILE_SIZE,
-                            borderRadius: '50%',
+                            borderRadius: 'full',
                             objectFit: 'cover',
                         })}
                     />
