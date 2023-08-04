@@ -71,8 +71,8 @@ const RankingList = ({ type }: Props) => {
                 className={css({
                     color: 'secondary',
                     justifyContent: 'space-between',
-                    borderBottomColor: 'primary',
                     borderBottom: '2px solid',
+                    borderBottomColor: 'primary',
                     pb: '10px',
                     gap: '10px',
                 })}

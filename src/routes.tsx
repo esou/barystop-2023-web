@@ -6,6 +6,10 @@ const routes: RouteObject[] = [
         Component: Home,
         path: '/',
     },
+    {
+        path: '/statistics',
+        Component: () => <div>En construction</div>,
+    },
 ]
 
 export default routes
