@@ -1,10 +1,11 @@
-import { css } from '../../styled-system/css'
+import { Container } from '../../styled-system/jsx'
 import RankingList from '../components/RankingList'
 
 const Home: React.FC = () => {
     return (
-        // <div className={css({ fontSize: '2xl', fontWeight: 'bold', color: 'cool' })}>Hello 🐼!</div>
-        <RankingList type={'yellow'} />
+        <Container>
+            <RankingList type={'yellow'} />
+        </Container>
     )
 }
 
