@@ -30,6 +30,7 @@ interface WeatherData {
 
 // Ranking screens
 declare type RankingType = 'yellow' | 'green' | 'red'
+declare type CardStatus = 'loading' | 'error' | 'fetched'
 
 interface ScorePerUserPerDay {
     date: string

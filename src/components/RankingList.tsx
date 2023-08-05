@@ -5,7 +5,8 @@ import { useQueries } from 'react-query'
 import { getScores, getUsers } from '../services/webservices'
 import CustomDatePicker from './CustomDatePicker'
 import { HStack, Stack, styled } from '../../styled-system/jsx'
-import { css } from '../../styled-system/css'
+
+import Card from './Card'
 
 interface Props {
     type: RankingType
@@ -105,20 +106,18 @@ const RankingList = ({ type }: Props) => {
     }
 
     return (
-        <div className={status}>
+        <Card status={status}>
             <CustomDatePicker
                 dateList={displaying_dates}
                 dateIdxSelected={dateIdxSelected}
                 setDateIdxSelected={setDateIdxSelected}
             />
-            {displaying_scores ? (
+            {displaying_scores && (
                 <Stack>
                     {displaying_scores.users.map((item, index) => renderItem(item, index))}
                 </Stack>
-            ) : (
-                <div>activity indicator</div>
             )}
-        </div>
+        </Card>
     )
 }
 

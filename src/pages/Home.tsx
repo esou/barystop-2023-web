@@ -1,7 +1,6 @@
 import { Grid, GridItem } from '../../styled-system/jsx'
 import RankingList from '../components/RankingList'
 import Card from '../components/Card'
-import { gridItem } from '../../styled-system/patterns'
 import { InstagramEmbed } from 'react-social-media-embed'
 
 const Home: React.FC = () => {
@@ -16,15 +15,21 @@ const Home: React.FC = () => {
             gap={3}
             padding={3}
             smDown={{ display: 'flex', flexDirection: 'column' }}>
-            <Card className={gridItem({ rowSpan: 2 })}>
+            <GridItem rowSpan={2}>
                 <RankingList type="yellow" />
-            </Card>
-            <Card className={gridItem({ colSpan: 2 })}></Card>
-            <Card className={gridItem({ colStart: 2 })}>etape du jour</Card>
+            </GridItem>
+            <GridItem colSpan={2}>
+                <Card status="fetched">map</Card>
+            </GridItem>
+            <GridItem colStart={2}>
+                <Card status="fetched">etape du jour</Card>
+            </GridItem>
             <GridItem rowSpan={2}>
                 <InstagramEmbed url="https://www.instagram.com/p/CsmF6elIkgK/" />
             </GridItem>
-            <Card className={gridItem({ colSpan: 2 })}> concurrents</Card>
+            <GridItem colSpan={2}>
+                <Card status="fetched">concurrents</Card>
+            </GridItem>
         </Grid>
     )
 }
