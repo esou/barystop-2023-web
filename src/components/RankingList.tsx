@@ -11,6 +11,7 @@ import Card from './Card'
 const PROFILE_SIZE = 35
 const RANKING_TYPES: RankingType[] = ['yellow', 'red', 'green']
 const RANKING_LABELS: Record<RankingType, string> = { green: 'vert', red: 'rouge', yellow: 'jaune' }
+const SCORE_TYPES: Record<RankingType, ScoreType> = { green: 'point', red: 'point', yellow: 'time' }
 
 const RankingList = () => {
     const [dateIdxSelected, setDateIdxSelected] = React.useState<number>(0)
@@ -43,7 +44,11 @@ const RankingList = () => {
                     .reduce((pts, pt) => Number(pts) + pt[u.id], 0),
             }))
             .sort((a, b) =>
-                b.score === a.score ? a.username.localeCompare(b.username) : b.score - a.score
+                b.score === a.score
+                    ? a.username.localeCompare(b.username)
+                    : SCORE_TYPES[type] === 'point'
+                    ? b.score - a.score
+                    : a.score - b.score
             )
         return [
             ...acc,
@@ -67,6 +72,20 @@ const RankingList = () => {
                   })
 
         const difference_position = previous_position - current_position
+        const score = () => {
+            if (SCORE_TYPES[type] === 'time') {
+                const best_time = displaying_scores.users[0].score
+                const fullseconds = index === 0 ? userScore.score : userScore.score - best_time
+                const hours = Math.trunc(fullseconds / 3600)
+                const minutes = Math.trunc((fullseconds - 3600 * hours) / 60)
+                const seconds = Math.trunc(fullseconds - 3600 * hours - 60 * minutes)
+
+                const libelle = hours + 'h ' + minutes + "' " + seconds + "''"
+                return index === 0 ? libelle : '+ ' + libelle
+            }
+
+            return userScore.score
+        }
 
         return (
             <HStack
@@ -102,7 +121,7 @@ const RankingList = () => {
                             {difference_position > 0 && '+'} {difference_position}
                         </styled.span>
                     )}
-                    <span>{userScore.score}</span>
+                    <span>{score()}</span>
                 </HStack>
             </HStack>
         )
