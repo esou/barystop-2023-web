@@ -2,6 +2,7 @@ import { Grid } from '../../styled-system/jsx'
 import RankingList from '../components/RankingList'
 import Card from '../components/Card'
 import { gridItem } from '../../styled-system/patterns'
+import EmbeddedInstagram from '../components/EmbeddedInstagram'
 
 const Home: React.FC = () => {
     return (
@@ -19,7 +20,9 @@ const Home: React.FC = () => {
             </Card>
             <Card className={gridItem({ colSpan: 2 })}>coucou</Card>
             <Card className={gridItem({ colStart: 2 })}>coucou</Card>
-            <Card>coucou</Card>
+            <Card>
+                <EmbeddedInstagram />
+            </Card>
         </Grid>
     )
 }
