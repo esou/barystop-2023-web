@@ -7,8 +7,8 @@ import CustomDatePicker from './CustomDatePicker'
 import { AspectRatio, HStack, Stack, styled } from '../../styled-system/jsx'
 
 import Card from './Card'
+import { circle } from '../../styled-system/patterns'
 
-const PROFILE_SIZE = 35
 const RANKING_TYPES: RankingType[] = ['yellow', 'red', 'green']
 const RANKING_LABELS: Record<RankingType, string> = { green: 'vert', red: 'rouge', yellow: 'jaune' }
 const SCORE_TYPES: Record<RankingType, ScoreType> = { green: 'point', red: 'point', yellow: 'time' }
@@ -99,12 +99,9 @@ const RankingList = () => {
                 _last={{ border: 0 }}>
                 <HStack>
                     <span>{index + 1} -</span>
-                    <styled.img
+                    <img
                         src={userScore.picture}
-                        height={PROFILE_SIZE}
-                        width={PROFILE_SIZE}
-                        borderRadius={'full'}
-                        objectFit={'cover'}
+                        className={circle({ size: 35, objectFit: 'cover' })}
                     />
                     <span>{userScore.username}</span>
                 </HStack>
