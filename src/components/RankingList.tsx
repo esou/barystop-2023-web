@@ -112,39 +112,44 @@ const RankingList = () => {
         <Card
             status={status}
             header={
-                <HStack justifyContent={'space-evenly'} cursor={'pointer'}>
-                    {RANKING_TYPES.map((rankingType) => {
-                        const selected = rankingType === type
-                        return (
-                            <HStack
-                                height={'100%'}
-                                width={'100%'}
-                                borderBottomWidth={selected ? 3 : 0}
-                                borderBottomColor={
-                                    rankingType === 'yellow'
-                                        ? 'yellow.400'
-                                        : rankingType === 'red'
-                                        ? 'red.400'
-                                        : 'green.400'
-                                }
-                                justifyContent={'center'}>
-                                <AspectRatio ratio={1} width={'1/5'}>
-                                    <img src={`./${rankingType}.png`} width={'100%'} />
-                                </AspectRatio>
-                                <styled.button
-                                    key={rankingType}
-                                    color={'inherit'}
-                                    padding={2}
-                                    onClick={() => selectTab(rankingType)}
-                                    fontWeight={selected ? 'bold' : 'medium'}
-                                    textTransform={'uppercase'}
-                                    cursor={'pointer'}>
-                                    {RANKING_LABELS[rankingType]}
-                                </styled.button>
-                            </HStack>
-                        )
-                    })}
-                </HStack>
+                <Stack textAlign={'center'} textJustify={'inter-word'} gap={0}>
+                    <styled.h2 fontWeight={'medium'} paddingTop={2}>
+                        Le classement
+                    </styled.h2>
+                    <HStack justifyContent={'space-evenly'} cursor={'pointer'}>
+                        {RANKING_TYPES.map((rankingType) => {
+                            const selected = rankingType === type
+                            return (
+                                <HStack
+                                    height={'100%'}
+                                    width={'100%'}
+                                    borderBottomWidth={selected ? 3 : 0}
+                                    borderBottomColor={
+                                        rankingType === 'yellow'
+                                            ? 'yellow.400'
+                                            : rankingType === 'red'
+                                            ? 'red.400'
+                                            : 'green.400'
+                                    }
+                                    justifyContent={'center'}>
+                                    <AspectRatio ratio={1} width={'1/5'}>
+                                        <img src={`./${rankingType}.png`} width={'100%'} />
+                                    </AspectRatio>
+                                    <styled.button
+                                        key={rankingType}
+                                        color={'inherit'}
+                                        padding={2}
+                                        onClick={() => selectTab(rankingType)}
+                                        fontWeight={selected ? 'bold' : 'medium'}
+                                        textTransform={'uppercase'}
+                                        cursor={'pointer'}>
+                                        {RANKING_LABELS[rankingType]}
+                                    </styled.button>
+                                </HStack>
+                            )
+                        })}
+                    </HStack>
+                </Stack>
             }>
             <CustomDatePicker
                 dateList={displaying_dates}
