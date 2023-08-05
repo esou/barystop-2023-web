@@ -1,9 +1,10 @@
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, ReactNode } from 'react'
 import { cva } from '../../styled-system/css'
-import { Container, Flex, styled } from '../../styled-system/jsx'
+import { Flex, styled } from '../../styled-system/jsx'
 import { token } from '../../styled-system/tokens'
 import { Radio } from 'react-loader-spinner'
 import Loader from './Loader'
+import CardHeader from './CardHeader'
 
 const cardStyle = cva({
     base: {
@@ -19,9 +20,10 @@ const cardStyle = cva({
 
 interface Props extends PropsWithChildren {
     status?: CardStatus
+    header?: ReactNode
 }
 
-const Card: React.FC<Props> = ({ status, children }) => {
+const Card: React.FC<Props> = ({ status, children, header }) => {
     const renderContent = () => {
         switch (status) {
             case 'error':
@@ -50,7 +52,12 @@ const Card: React.FC<Props> = ({ status, children }) => {
                 return <Loader />
         }
     }
-    return <Container className={cardStyle()}>{renderContent()}</Container>
+    return (
+        <div className={cardStyle()}>
+            {header && <CardHeader>{header}</CardHeader>}
+            {renderContent()}
+        </div>
+    )
 }
 
 export default Card
