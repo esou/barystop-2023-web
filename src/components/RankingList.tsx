@@ -57,13 +57,13 @@ const RankingList = () => {
     const displaying_dates = (scores ?? []).map((s) => s.date)
     const displaying_scores = sorted_scores[dateIdxSelected]
 
-    const renderItem = (item: ScorePerUser, index: number) => {
+    const renderUserRank = (userScore: ScorePerUser, index: number) => {
         const current_position = index
         const previous_position =
             dateIdxSelected === 0
                 ? index
                 : sorted_scores[dateIdxSelected - 1].users.findIndex((toto) => {
-                      return toto.id === item.id
+                      return toto.id === userScore.id
                   })
 
         const difference_position = previous_position - current_position
@@ -76,32 +76,34 @@ const RankingList = () => {
                 borderBottomColor={'primary'}
                 pb="10px"
                 pt="10px"
-                key={item.username}
+                key={userScore.username}
                 _last={{ border: 0 }}>
                 <HStack>
                     <span>{index + 1} -</span>
                     <styled.img
-                        src={item.picture}
+                        src={userScore.picture}
                         height={PROFILE_SIZE}
                         width={PROFILE_SIZE}
                         borderRadius={'full'}
                         objectFit={'cover'}
                     />
-                    <span>{item.username}</span>
+                    <span>{userScore.username}</span>
                 </HStack>
-                {!!difference_position && (
-                    <styled.span
-                        color={
-                            difference_position === 0
-                                ? undefined
-                                : difference_position > 0
-                                ? 'green.500'
-                                : 'red.500'
-                        }>
-                        {difference_position > 0 && '+'} {difference_position}
-                    </styled.span>
-                )}
-                <span>{item.score}</span>
+                <HStack gap={5}>
+                    {!!difference_position && (
+                        <styled.span
+                            color={
+                                difference_position === 0
+                                    ? undefined
+                                    : difference_position > 0
+                                    ? 'green.500'
+                                    : 'red.500'
+                            }>
+                            {difference_position > 0 && '+'} {difference_position}
+                        </styled.span>
+                    )}
+                    <span>{userScore.score}</span>
+                </HStack>
             </HStack>
         )
     }
@@ -158,7 +160,7 @@ const RankingList = () => {
             />
             {displaying_scores && (
                 <Stack>
-                    {displaying_scores.users.map((item, index) => renderItem(item, index))}
+                    {displaying_scores.users.map((item, index) => renderUserRank(item, index))}
                 </Stack>
             )}
         </Card>
