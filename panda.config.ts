@@ -25,6 +25,16 @@ export default defineConfig({
             },
         },
     },
+    globalCss: {
+        body: {
+            minHeight: '100vh',
+            minWidth: '100%',
+            display: 'flex',
+        },
+        '#root': {
+            width: '-webkit-fill-available',
+        },
+    },
 
     // The output directory for your css system
     outdir: 'styled-system',

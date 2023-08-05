@@ -4,8 +4,7 @@ import { isAfter, isSameDay } from 'date-fns'
 import { useQueries } from 'react-query'
 import { getScores, getUsers } from '../services/webservices'
 import CustomDatePicker from './CustomDatePicker'
-import { HStack, Stack } from '../../styled-system/jsx'
-import { css } from '../../styled-system/css'
+import { HStack, Stack, styled } from '../../styled-system/jsx'
 
 interface Props {
     type: RankingType
@@ -68,40 +67,35 @@ const RankingList = ({ type }: Props) => {
 
         return (
             <HStack
-                className={css({
-                    color: 'secondary',
-                    justifyContent: 'space-between',
-                    borderBottom: '2px solid',
-                    borderBottomColor: 'primary',
-                    pb: '10px',
-                    gap: '10px',
-                })}
+                color={'secondary'}
+                justifyContent={'space-between'}
+                borderBottomWidth={'2px'}
+                borderBottomColor={'primary'}
+                pb="10px"
+                pt="10px"
                 key={item.username}>
                 <HStack>
                     <span>{index + 1} -</span>
-                    <img
+                    <styled.img
                         src={item.picture}
-                        className={css({
-                            height: PROFILE_SIZE,
-                            width: PROFILE_SIZE,
-                            borderRadius: 'full',
-                            objectFit: 'cover',
-                        })}
+                        height={PROFILE_SIZE}
+                        width={PROFILE_SIZE}
+                        borderRadius={'full'}
+                        objectFit={'cover'}
                     />
                     <span>{item.username}</span>
                 </HStack>
                 {!!difference_position && (
-                    <span
-                        className={css({
-                            color:
-                                difference_position === 0
-                                    ? undefined
-                                    : difference_position > 0
-                                    ? 'green.500'
-                                    : 'red.500',
-                        })}>
+                    <styled.span
+                        color={
+                            difference_position === 0
+                                ? undefined
+                                : difference_position > 0
+                                ? 'green.500'
+                                : 'red.500'
+                        }>
                         {difference_position > 0 && '+'} {difference_position}
-                    </span>
+                    </styled.span>
                 )}
                 <span>{item.score}</span>
             </HStack>
