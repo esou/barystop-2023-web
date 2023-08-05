@@ -16,7 +16,7 @@ const Home: React.FC = () => {
             padding={3}
             smDown={{ display: 'flex', flexDirection: 'column' }}>
             <GridItem rowSpan={2}>
-                <RankingList type="yellow" />
+                <RankingList />
             </GridItem>
             <GridItem colSpan={2}>
                 <Card status="fetched">map</Card>
