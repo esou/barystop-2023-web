@@ -5,6 +5,7 @@ import { useQueries } from 'react-query'
 import { getScores, getUsers } from '../services/webservices'
 import CustomDatePicker from './CustomDatePicker'
 import { HStack, Stack, styled } from '../../styled-system/jsx'
+import { css } from '../../styled-system/css'
 
 interface Props {
     type: RankingType
@@ -73,7 +74,8 @@ const RankingList = ({ type }: Props) => {
                 borderBottomColor={'primary'}
                 pb="10px"
                 pt="10px"
-                key={item.username}>
+                key={item.username}
+                _last={{ border: 0 }}>
                 <HStack>
                     <span>{index + 1} -</span>
                     <styled.img
