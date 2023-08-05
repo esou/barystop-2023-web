@@ -175,7 +175,7 @@ const RankingList = () => {
                 setDateIdxSelected={setDateIdxSelected}
             />
             {displaying_scores && (
-                <Stack>
+                <Stack gap="0">
                     {displaying_scores.users.map((item, index) => renderUserRank(item, index))}
                 </Stack>
             )}

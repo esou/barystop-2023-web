@@ -11,7 +11,7 @@ const cardStyle = cva({
         display: 'flex',
         flexDirection: 'column',
         padding: '2',
-        bg: 'whitesmoke',
+        bg: 'white',
         borderRadius: 'md',
         boxShadow: 'sm',
         height: '100%',
