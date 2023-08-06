@@ -24,5 +24,8 @@ dist-ssr
 *.sw?
 
 
+.env
+
+
 #panda
 styled-system
