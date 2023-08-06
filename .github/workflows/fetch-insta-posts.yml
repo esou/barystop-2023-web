@@ -14,7 +14,7 @@ jobs:
       - name: Overwrite file
         uses: "DamianReeves/write-file-action@master"
         with:
-          path: public/instagram.json
+          path: "public/instagram.json"
           write-mode: overwrite
           contents: "test" 
       - name: Commit & Push
