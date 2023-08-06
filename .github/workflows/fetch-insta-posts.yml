@@ -15,7 +15,7 @@ jobs:
         id: instagram_posts
         run: |
           echo "JSON_RESPONSE=coucou" >> "$GITHUB_OUTPUT"
-        with:
+        env:
           IG_TOKEN: ${{secrets.VITE_IG_TOKEN}}
       - name: Overwrite file
         uses: "DamianReeves/write-file-action@master"
