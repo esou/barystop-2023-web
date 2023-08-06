@@ -3,11 +3,7 @@ import { format } from 'date-fns'
 
 const NO_CACHE = `?timestamp=${new Date().getTime()}`
 
-const IG_ACCESS_TOKEN = import.meta.env.VITE_IG_TOKEN
-
-const USER_IG_ID = '6388771287909736'
-
-const INSTAGRAM_PATH = `https://graph.instagram.com/${USER_IG_ID}/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink&access_token=${IG_ACCESS_TOKEN}`
+const INSTAGRAM_PATH = './instagram.json'
 
 const STEPS_PATH =
     'https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/main/steps/steps.json' +
