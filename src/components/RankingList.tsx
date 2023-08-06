@@ -136,10 +136,11 @@ const RankingList = () => {
                         Le classement
                     </Title>
                     <HStack justifyContent={'space-evenly'} cursor={'pointer'}>
-                        {RANKING_TYPES.map((rankingType) => {
+                        {RANKING_TYPES.map((rankingType, idx) => {
                             const selected = rankingType === type
                             return (
                                 <HStack
+                                    key={idx}
                                     height={'100%'}
                                     width={'100%'}
                                     borderBottomWidth={selected ? 3 : 0}

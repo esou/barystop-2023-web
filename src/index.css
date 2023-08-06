@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Paris2024';
-    src: local('./fonts/Paris2024-Variable.ttf')
+    src: url("https://db.onlinewebfonts.com/t/4eb57c4bdd98832e4644535022618bc9.ttf")format("truetype"),
   }
   
 @layer reset, base, tokens, recipes, utilities;

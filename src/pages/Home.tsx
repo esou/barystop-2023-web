@@ -5,6 +5,7 @@ import Card from '../components/Card'
 import RankingList from '../components/RankingList'
 import InstagramFeed from '../components/InstagramFeed'
 import Today from '../components/Today'
+import MapComponent from '../components/Map'
 
 const Home: React.FC = () => {
     return (
@@ -22,7 +23,7 @@ const Home: React.FC = () => {
                 <RankingList />
             </GridItem>
             <GridItem colSpan={2}>
-                <Card status="loading">map</Card>
+                <MapComponent />
             </GridItem>
             <GridItem colStart={2} smDown={{ height: '300px' }}>
                 <Today />
