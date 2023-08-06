@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { AspectRatio, Container, Divider, Flex, Grid, Stack, styled } from '../../styled-system/jsx'
+import { AspectRatio, Divider, Flex, Grid, Stack, styled } from '../../styled-system/jsx'
 import Card from './Card'
 import Title from './Title'
 import { gridItem } from '../../styled-system/patterns'
@@ -34,6 +34,7 @@ const CityCard: React.FC<Props> = ({
                     position="absolute"
                     top="-25px"
                     right="-25px"
+                    mdDown={{ top: 0, right: 0 }}
                     bg="secondary"
                     color="primary"
                     textTransform="uppercase"
@@ -67,9 +68,9 @@ const CityCard: React.FC<Props> = ({
                 left="40%"
                 top="30%"
                 padding={2}>
-                <Container className={gridItem({ colSpan: 2 })} my="auto">
+                <Flex className={gridItem({ colSpan: 2 })} align={'center'} justify={'center'}>
                     <Weather latitude={lat} longitude={lon} />
-                </Container>
+                </Flex>
                 <Flex align={'center'} justify={'center'}>
                     {previousStep ? (
                         <Distance

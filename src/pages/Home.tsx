@@ -24,7 +24,7 @@ const Home: React.FC = () => {
             <GridItem colSpan={2}>
                 <Card status="loading">map</Card>
             </GridItem>
-            <GridItem colStart={2}>
+            <GridItem colStart={2} smDown={{ height: '300px' }}>
                 <Today />
             </GridItem>
             <GridItem rowSpan={2}>
