@@ -16,10 +16,12 @@ jobs:
         with:
           node-version: 18.x
           cache: "yarn"
-      - run: yarn
-      - run: |
-             git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-             gh-pages -d dist -- -u "github-actions-bot <support+actions@github.com>"
+      - name: "Install Dependencies"
+        run: yarn
+      - name: "GH Pages"
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          yarn deploy -u "github-actions-bot <support+actions@github.com>"
         env:
           VITE_IG_TOKEN: "{{secrets.VITE_ENV_TOKEN}}" 
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
