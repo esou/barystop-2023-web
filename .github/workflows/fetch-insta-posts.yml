@@ -14,11 +14,11 @@ jobs:
       - name: Fetch posts 
         id: instagram_posts
         run: |
-          response=$(curl --location https://graph.instagram.com/6388771287909736/media?fields=id%2Ccaption%2Cmedia_type%2Cmedia_url%2Cthumbnail_url%2Cpermalink&access_token=${IG_TOKEN})
+          response=$(curl --location https://graph.instagram.com/6388771287909736/media?fields=id%2Ccaption%2Cmedia_type%2Cmedia_url%2Cthumbnail_url%2Cpermalink&access_token=${VITE_IG_TOKEN})
           echo "Response: $response"
           echo "::set-output name=JSON_RESPONSE::$response"
         env:
-          IG_TOKEN: ${{secrets.VITE_IG_TOKEN}}
+          VITE_IG_TOKEN: ${{secrets.VITE_IG_TOKEN}}
       - name: Overwrite file
         uses: "DamianReeves/write-file-action@master"
         with:
