@@ -49,7 +49,7 @@ const InstagramFeed = () => {
                         window.open('https://instagram.com/barystop?igshid=MmIzYWVlNDQ5Yg==')
                     }
                     cursor="pointer">
-                    <styled.img src={'/barystop_qr.png'} alt="Instagram page" objectFit="cover" />
+                    <styled.img src={'./barystop_qr.png'} alt="Instagram page" objectFit="cover" />
                 </AspectRatio>
             </Grid>
         </Card>
