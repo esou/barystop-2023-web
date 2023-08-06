@@ -2,8 +2,8 @@ name: Overwrite some file
 
 on:
   push:
-    branches: [ gh-action-write-json ]
-  workflow_dispatch:
+    branches:
+      - test-gh-actions
 
 jobs:
   build:
@@ -14,9 +14,9 @@ jobs:
       - name: Overwrite file
         uses: "DamianReeves/write-file-action@master"
         with:
-          path: public/instagram.json
-          write-mode: overwrite
-          contents: "{"test":"test"}"    
+          - path: public/instagram.json
+          - write-mode: overwrite
+          - contents: "test" 
       - name: Commit & Push
         uses: Andro999b/push@v1.3
         with:
