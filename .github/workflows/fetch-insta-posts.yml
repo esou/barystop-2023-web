@@ -1,4 +1,4 @@
-name: Overwrite some file
+name: Fetch instagram latest posts
 
 on:
   push:
