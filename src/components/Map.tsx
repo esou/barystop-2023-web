@@ -5,7 +5,7 @@ import { Flex } from '../../styled-system/jsx'
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet'
 import { getSteps } from '../services/webservices'
 import { format, isBefore } from 'date-fns'
-import { LatLngBoundsExpression } from 'leaflet'
+import { LatLngBoundsExpression, LatLngExpression } from 'leaflet'
 
 const DEFAULT_ZOOM = 11
 const DEFAULT_LOC = { lat: 48.864716, lng: 2.349014 }
@@ -13,7 +13,7 @@ const DEFAULT_LOC = { lat: 48.864716, lng: 2.349014 }
 const MapComponent = () => {
     const [status, setStatus] = React.useState<CardStatus>('loading')
     const [steps, setSteps] = React.useState<StepData[]>([])
-    const [polyline, setPolyline] = React.useState<LatLngBoundsExpression[][]>([])
+    const [polyline, setPolyline] = React.useState<LatLngExpression[][]>([])
 
     React.useEffect(() => {
         getSteps()
@@ -22,7 +22,12 @@ const MapComponent = () => {
                     .filter((s) => isBefore(new Date(s.date), new Date()))
                     .slice(0, 10)
                 setSteps(visible_steps)
-                setPolyline(visible_steps.map((a) => [a.lat as unknown as LatLngBoundsExpression, a.lon as unknown as LatLngBoundsExpression]))
+                setPolyline(
+                    visible_steps.map((a) => [
+                        a.lat as unknown as LatLngExpression,
+                        a.lon as unknown as LatLngExpression,
+                    ])
+                )
                 setStatus('fetched')
             })
             .catch(() => setStatus('error'))
@@ -32,7 +37,7 @@ const MapComponent = () => {
         <Card status={status}>
             <Flex height={'100%'}>
                 <MapContainer
-                    bounds={polyline}
+                    bounds={polyline as unknown as LatLngBoundsExpression}
                     center={DEFAULT_LOC}
                     zoom={steps.length < 2 ? DEFAULT_ZOOM : undefined}
                     style={{ height: '100%', width: '100%' }}>
