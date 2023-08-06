@@ -4,7 +4,7 @@ import { isAfter, isSameDay } from 'date-fns'
 import { useQueries } from 'react-query'
 import { getScores, getUsers } from '../services/webservices'
 import CustomDatePicker from './CustomDatePicker'
-import { AspectRatio, HStack, Stack, styled } from '../../styled-system/jsx'
+import { AspectRatio, HStack, Stack, styled, Flex } from '../../styled-system/jsx'
 
 import Card from './Card'
 import { circle } from '../../styled-system/patterns'
@@ -104,7 +104,7 @@ const RankingList = () => {
                         src={userScore.picture}
                         className={circle({ size: 35, objectFit: 'cover' })}
                     />
-                    <span>{userScore.username}</span>
+                    <Flex>{userScore.username}</Flex>
                 </HStack>
                 <HStack gap={5}>
                     {!!difference_position && (
@@ -115,11 +115,14 @@ const RankingList = () => {
                                     : difference_position > 0
                                     ? 'green.500'
                                     : 'red.500'
-                            }>
+                            }
+                            width="30px">
                             {difference_position > 0 && '+'} {difference_position}
                         </styled.span>
                     )}
-                    <span>{score()}</span>
+                    <styled.span width="100px" textAlign="right">
+                        {score()}
+                    </styled.span>
                 </HStack>
             </HStack>
         )
