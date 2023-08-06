@@ -4,14 +4,12 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-
       - name: Overwrite file
         uses: "DamianReeves/write-file-action@master"
         with:
           path: public/instagram.json
           write-mode: overwrite
-          contents: "{"test":"test"}"
-            
+          contents: "{"test":"test"}"    
       - name: Commit & Push
         uses: Andro999b/push@v1.3
         with:
