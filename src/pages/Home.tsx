@@ -2,6 +2,7 @@ import { Grid, GridItem } from '../../styled-system/jsx'
 import RankingList from '../components/RankingList'
 import Card from '../components/Card'
 import { InstagramEmbed } from 'react-social-media-embed'
+import Today from '../components/Today'
 
 const Home: React.FC = () => {
     return (
@@ -19,10 +20,10 @@ const Home: React.FC = () => {
                 <RankingList />
             </GridItem>
             <GridItem colSpan={2}>
-                <Card status="fetched">map</Card>
+                <Card status="loading">map</Card>
             </GridItem>
             <GridItem colStart={2}>
-                <Card status="fetched">etape du jour</Card>
+                <Today />
             </GridItem>
             <GridItem rowSpan={2}>
                 <InstagramEmbed url="https://www.instagram.com/p/CsmF6elIkgK/" />

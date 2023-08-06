@@ -1,10 +1,10 @@
 import { PropsWithChildren, ReactNode } from 'react'
-import { cva } from '../../styled-system/css'
+import { RecipeVariantProps, cva } from '../../styled-system/css'
 import { Flex, styled } from '../../styled-system/jsx'
 import { token } from '../../styled-system/tokens'
 import { Radio } from 'react-loader-spinner'
 import Loader from './Loader'
-import CardHeader from './CardHeader'
+import CardHeader, { CardHeaderVariants } from './CardHeader'
 
 const cardStyle = cva({
     base: {
@@ -15,15 +15,27 @@ const cardStyle = cva({
         borderRadius: 'md',
         boxShadow: 'sm',
         height: '100%',
+        position: 'relative',
+    },
+    variants: {
+        type: {
+            bordered: {
+                borderWidth: 2,
+                borderColor: 'secondary',
+                borderRadius: 0,
+            },
+        },
     },
 })
 
-interface Props extends PropsWithChildren {
+type Props = PropsWithChildren<{
     status?: CardStatus
     header?: ReactNode
-}
+    headerVariant?: CardHeaderVariants
+}> &
+    RecipeVariantProps<typeof cardStyle>
 
-const Card: React.FC<Props> = ({ status, children, header }) => {
+const Card: React.FC<Props> = ({ status, children, header, headerVariant, type }) => {
     const renderContent = () => {
         switch (status) {
             case 'error':
@@ -53,8 +65,8 @@ const Card: React.FC<Props> = ({ status, children, header }) => {
         }
     }
     return (
-        <div className={cardStyle()}>
-            {header && <CardHeader>{header}</CardHeader>}
+        <div className={cardStyle({ type })}>
+            {header && <CardHeader {...headerVariant}>{header}</CardHeader>}
             {renderContent()}
         </div>
     )

@@ -8,6 +8,7 @@ import { AspectRatio, HStack, Stack, styled } from '../../styled-system/jsx'
 
 import Card from './Card'
 import { circle } from '../../styled-system/patterns'
+import Title from './Title'
 
 const RANKING_TYPES: RankingType[] = ['yellow', 'red', 'green']
 const RANKING_LABELS: Record<RankingType, string> = { green: 'vert', red: 'rouge', yellow: 'jaune' }
@@ -130,10 +131,8 @@ const RankingList = () => {
         <Card
             status={status}
             header={
-                <Stack textAlign={'center'} textJustify={'inter-word'} gap={0}>
-                    <styled.h2 fontWeight={'medium'} paddingTop={2}>
-                        Le classement
-                    </styled.h2>
+                <Stack gap={0}>
+                    <Title type="card">Le classement</Title>
                     <HStack justifyContent={'space-evenly'} cursor={'pointer'}>
                         {RANKING_TYPES.map((rankingType) => {
                             const selected = rankingType === type

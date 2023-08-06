@@ -10,6 +10,11 @@ interface StepData {
     lon: number
 }
 
+interface LatLong {
+    latitude: number
+    longitude: number
+}
+
 // interface CityPolygon {
 //     step: string
 //     type: 'Polygon' | 'MultiPolygon'

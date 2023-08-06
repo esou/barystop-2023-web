@@ -21,7 +21,7 @@ const CustomDatePicker = ({ dateList, dateIdxSelected, setDateIdxSelected }: Pro
                         onClick={() => setDateIdxSelected(idx)}
                         disabled={disabled}
                         bg={'white'}
-                        boxShadow={selected ? '0px 0px  3px ' : '0px 0px  1px '}
+                        boxShadow={selected ? 'lg' : 'sm'}
                         boxShadowColor={'black'}
                         borderRadius={'sm'}
                         width={20}
