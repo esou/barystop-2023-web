@@ -20,4 +20,6 @@ const titleStyles = cva({
     },
 })
 
-export default styled('h2', titleStyles)
+const Title = styled('h2', titleStyles)
+
+export default Title

@@ -18,4 +18,6 @@ const cardHeaderStyles = cva({
 
 export type CardHeaderVariants = RecipeVariantProps<typeof cardHeaderStyles>
 
-export default styled('div', cardHeaderStyles)
+const CardHeader = styled('div', cardHeaderStyles)
+
+export default CardHeader

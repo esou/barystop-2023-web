@@ -10,7 +10,7 @@ const Weather = ({ latitude, longitude }: LatLong) => {
         getMeteo(latitude, longitude).then((res) => {
             setCurrentWeather(res)
         })
-    }, [])
+    }, [latitude, longitude])
 
     const imagePath = React.useMemo(() => {
         if (!currentWeather) {

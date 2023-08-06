@@ -17,7 +17,7 @@ const SCORE_TYPES: Record<RankingType, ScoreType> = { green: 'point', red: 'poin
 const RankingList = () => {
     const [dateIdxSelected, setDateIdxSelected] = React.useState<number>(0)
     const [type, setType] = React.useState<RankingType>('yellow')
-    const [_isPending, startTransition] = React.useTransition()
+    const [, startTransition] = React.useTransition()
 
     const queries = useQueries([
         { queryKey: ['Scores', type], queryFn: () => getScores(type) },
