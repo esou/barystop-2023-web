@@ -1,14 +1,16 @@
 import { Grid, GridItem } from '../../styled-system/jsx'
-import RankingList from '../components/RankingList'
+
 import Card from '../components/Card'
-import { InstagramEmbed } from 'react-social-media-embed'
+
+import RankingList from '../components/RankingList'
+import InstagramFeed from '../components/InstagramFeed'
 
 const Home: React.FC = () => {
     return (
         <Grid
             bgGradient={'to-br'}
             gradientFrom={'sky.200'}
-            gradientTo={'primary'}
+            gradientTo={'secondary'}
             height={'100%'}
             width={'100%'}
             columns={3}
@@ -25,7 +27,7 @@ const Home: React.FC = () => {
                 <Card status="fetched">etape du jour</Card>
             </GridItem>
             <GridItem rowSpan={2}>
-                <InstagramEmbed url="https://www.instagram.com/p/CsmF6elIkgK/" />
+                <InstagramFeed/>
             </GridItem>
             <GridItem colSpan={2}>
                 <Card status="fetched">concurrents</Card>
@@ -35,3 +37,5 @@ const Home: React.FC = () => {
 }
 
 export default Home
+
+

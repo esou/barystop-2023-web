@@ -3,6 +3,12 @@ import { format } from 'date-fns'
 
 const NO_CACHE = `?timestamp=${new Date().getTime()}`
 
+const IG_ACCESS_TOKEN = "IGQVJXRXRuYjRLb3ZAkWDhGTW1zNE1oUTYwZAGdFWVVSMDFEQjJVTkpLdWowRXYwUk5XZATU2ME96SmhUNG9hVDV0ejFPMkcwbm1keFl5SGZAmekNlYmszSlRTMmc0cVNGeVVrc1ZABUTgtaWNaUVdZAWVJ5dwZDZD"
+
+const USER_IG_ID = '6388771287909736'
+
+const INSTAGRAM_PATH = `https://graph.instagram.com/${USER_IG_ID}/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink&access_token=${IG_ACCESS_TOKEN}`;
+
 const STEPS_PATH =
     'https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/main/steps/steps.json' +
     NO_CACHE
@@ -43,6 +49,8 @@ const SCORES_PATH = {
 //     'https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/main/content/help.json' +
 //     NO_CACHE
 
+const getInstagrams = (): Promise<InstagramItem[]> => axios.get(INSTAGRAM_PATH).then(res => res.data.data)
+
 const getSteps = (): Promise<StepData[]> => axios.get(STEPS_PATH).then((res) => res.data.steps)
 
 // const getStepDetail = (stepId: string): Promise<ContentScreen> =>
@@ -77,6 +85,7 @@ const getMeteo = (latitude: number, longitude: number): Promise<WeatherData> => 
 }
 
 export {
+    getInstagrams,
     getSteps,
     // getStepDetail,
     // getPolygons,
