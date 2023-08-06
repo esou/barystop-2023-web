@@ -1,1 +1,1 @@
-test
+curl --location 'https://graph.instagram.com/6388771287909736/media?fields=id%2Ccaption%2Cmedia_type%2Cmedia_url%2Cthumbnail_url%2Cpermalink&access_token=${IG_TOKEN}'
