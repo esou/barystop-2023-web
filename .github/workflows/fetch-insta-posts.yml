@@ -1,3 +1,10 @@
+name: Overwrite some file
+
+on:
+  push:
+    branches: [ gh-action-write-json ]
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
