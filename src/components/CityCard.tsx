@@ -44,7 +44,8 @@ const CityCard: React.FC<Props> = ({
                     fontSize="sm"
                     justifyContent="center"
                     lineHeight="tight"
-                    boxShadow="xs">
+                    boxShadow="xs"
+                    zIndex={1}>
                     <span>{format(new Date(date), 'EEE')}</span>
                     <styled.span fontSize={'lg'}>{format(new Date(date), 'dd')}</styled.span>
                     <span>{format(new Date(date), 'MMM')}</span>

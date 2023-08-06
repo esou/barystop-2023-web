@@ -28,7 +28,7 @@ const Home: React.FC = () => {
                 <Today />
             </GridItem>
             <GridItem rowSpan={2}>
-                <InstagramFeed/>
+                <InstagramFeed />
             </GridItem>
             <GridItem colSpan={2}>
                 <Card status="fetched">concurrents</Card>
@@ -38,5 +38,3 @@ const Home: React.FC = () => {
 }
 
 export default Home
-
-
