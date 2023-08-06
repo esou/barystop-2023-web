@@ -5,6 +5,7 @@ import { Flex } from '../../styled-system/jsx'
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet'
 import { getSteps } from '../services/webservices'
 import { format, isBefore } from 'date-fns'
+import { LatLngBoundsExpression } from 'leaflet'
 
 const DEFAULT_ZOOM = 11
 const DEFAULT_LOC = { lat: 48.864716, lng: 2.349014 }
@@ -12,7 +13,7 @@ const DEFAULT_LOC = { lat: 48.864716, lng: 2.349014 }
 const MapComponent = () => {
     const [status, setStatus] = React.useState<CardStatus>('loading')
     const [steps, setSteps] = React.useState<StepData[]>([])
-    const [polyline, setPolyline] = React.useState<number[][]>([])
+    const [polyline, setPolyline] = React.useState<LatLngBoundsExpression[][]>([])
 
     React.useEffect(() => {
         getSteps()
@@ -21,7 +22,7 @@ const MapComponent = () => {
                     .filter((s) => isBefore(new Date(s.date), new Date()))
                     .slice(0, 10)
                 setSteps(visible_steps)
-                setPolyline(visible_steps.map((a) => [a.lat, a.lon]))
+                setPolyline(visible_steps.map((a) => [a.lat as unknown as LatLngBoundsExpression, a.lon as unknown as LatLngBoundsExpression]))
                 setStatus('fetched')
             })
             .catch(() => setStatus('error'))
