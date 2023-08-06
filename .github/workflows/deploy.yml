@@ -20,4 +20,6 @@ jobs:
             VITE_IG_TOKEN: "{{secrets.VITE_ENV_TOKEN}}" 
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: yarn
-      - run: yarn deploy
+      - run: |
+             git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+             yarn deploy -- -u "github-actions-bot <support+actions@github.com>"
