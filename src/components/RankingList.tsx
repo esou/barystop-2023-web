@@ -132,7 +132,9 @@ const RankingList = () => {
             status={status}
             header={
                 <Stack gap={0}>
-                    <Title type="card">Le classement</Title>
+                    <Title type="card" mb={-2}>
+                        Le classement
+                    </Title>
                     <HStack justifyContent={'space-evenly'} cursor={'pointer'}>
                         {RANKING_TYPES.map((rankingType) => {
                             const selected = rankingType === type

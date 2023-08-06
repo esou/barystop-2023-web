@@ -32,9 +32,8 @@ const CityCard: React.FC<Props> = ({
             header={
                 <Stack
                     position="absolute"
-                    top="-25px"
-                    right="-25px"
-                    mdDown={{ top: 0, right: 0 }}
+                    top={0}
+                    right={0}
                     bg="secondary"
                     color="primary"
                     textTransform="uppercase"
