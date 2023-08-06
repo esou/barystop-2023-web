@@ -3,7 +3,7 @@ name: Overwrite some file
 on:
   push:
     branches:
-      - test-gh-actions
+      - gh-action-write-json
 
 jobs:
   build:
