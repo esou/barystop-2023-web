@@ -1,11 +1,10 @@
 import { Grid, GridItem } from '../../styled-system/jsx'
 
-import Card from '../components/Card'
-
 import RankingList from '../components/RankingList'
 import InstagramFeed from '../components/InstagramFeed'
 import Today from '../components/Today'
 import MapComponent from '../components/Map'
+import Contenders from '../components/Contenders'
 
 const Home: React.FC = () => {
     return (
@@ -32,7 +31,7 @@ const Home: React.FC = () => {
                 <InstagramFeed />
             </GridItem>
             <GridItem colSpan={2}>
-                <Card status="fetched">concurrents</Card>
+                <Contenders />
             </GridItem>
         </Grid>
     )

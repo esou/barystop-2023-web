@@ -40,6 +40,7 @@ const InstagramFeed = () => {
                     <>
                         {idx === 2 && (
                             <AspectRatio
+                                key={'fixed_ig_link'}
                                 onClick={() =>
                                     window.open(
                                         'https://instagram.com/barystop?igshid=MmIzYWVlNDQ5Yg=='

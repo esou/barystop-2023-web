@@ -6,6 +6,7 @@ import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet'
 import { getSteps } from '../services/webservices'
 import { format, isBefore } from 'date-fns'
 import { LatLngBoundsExpression, LatLngExpression } from 'leaflet'
+import Title from './Title'
 
 const DEFAULT_ZOOM = 11
 const DEFAULT_LOC = { lat: 48.864716, lng: 2.349014 }
@@ -18,9 +19,7 @@ const MapComponent = () => {
     React.useEffect(() => {
         getSteps()
             .then((res) => {
-                const visible_steps = res
-                    .filter((s) => isBefore(new Date(s.date), new Date()))
-                    .slice(0, 10)
+                const visible_steps = res.filter((s) => isBefore(new Date(s.date), new Date()))
                 setSteps(visible_steps)
                 setPolyline(
                     visible_steps.map((a) => [
@@ -34,13 +33,13 @@ const MapComponent = () => {
     })
 
     return (
-        <Card status={status}>
+        <Card status={status} header={<Title type="card">Résumé du trajet parcouru</Title>}>
             <Flex height={'100%'}>
                 <MapContainer
                     bounds={polyline as unknown as LatLngBoundsExpression}
                     center={DEFAULT_LOC}
                     zoom={steps.length < 2 ? DEFAULT_ZOOM : undefined}
-                    style={{ height: '100%', width: '100%' }}>
+                    style={{ height: '100%', width: '100%', minHeight: '300px' }}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
