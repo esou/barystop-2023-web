@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import Card from './Card'
 import { Flex } from '../../styled-system/jsx'
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet'
@@ -7,30 +5,26 @@ import { getSteps } from '../services/webservices'
 import { format, isBefore } from 'date-fns'
 import { LatLngBoundsExpression, LatLngExpression } from 'leaflet'
 import Title from './Title'
+import { useQuery } from 'react-query'
 
 const DEFAULT_ZOOM = 11
 const DEFAULT_LOC = { lat: 48.864716, lng: 2.349014 }
 
 const MapComponent = () => {
-    const [status, setStatus] = React.useState<CardStatus>('loading')
-    const [steps, setSteps] = React.useState<StepData[]>([])
-    const [polyline, setPolyline] = React.useState<LatLngExpression[][]>([])
+    const {
+        data: steps,
+        isLoading,
+        isError,
+    } = useQuery({ queryKey: ['Steps'], queryFn: () => getSteps() })
 
-    React.useEffect(() => {
-        getSteps()
-            .then((res) => {
-                const visible_steps = res.filter((s) => isBefore(new Date(s.date), new Date()))
-                setSteps(visible_steps)
-                setPolyline(
-                    visible_steps.map((a) => [
-                        a.lat as unknown as LatLngExpression,
-                        a.lon as unknown as LatLngExpression,
-                    ])
-                )
-                setStatus('fetched')
-            })
-            .catch(() => setStatus('error'))
-    })
+    const status = isLoading ? 'loading' : isError ? 'error' : 'fetched'
+
+    const visible_steps = (steps ?? []).filter((s) => isBefore(new Date(s.date), new Date()))
+
+    const polyline = visible_steps.map((a) => [
+        a.lat as unknown as LatLngExpression,
+        a.lon as unknown as LatLngExpression,
+    ])
 
     return (
         <Card status={status} header={<Title type="card">Résumé du trajet parcouru</Title>}>
@@ -38,14 +32,14 @@ const MapComponent = () => {
                 <MapContainer
                     bounds={polyline as unknown as LatLngBoundsExpression}
                     center={DEFAULT_LOC}
-                    zoom={steps.length < 2 ? DEFAULT_ZOOM : undefined}
+                    zoom={visible_steps.length < 2 ? DEFAULT_ZOOM : undefined}
                     style={{ height: '100%', width: '100%', minHeight: '300px' }}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     <Polyline positions={polyline} />
-                    {steps.map((step, idx) => (
+                    {visible_steps.map((step, idx) => (
                         <Marker key={idx} position={{ lat: step.lat, lng: step.lon }}>
                             <Popup>
                                 <div>
@@ -57,7 +51,7 @@ const MapComponent = () => {
                                     <div>
                                         {idx === 0
                                             ? `Départ de ${step.city}`
-                                            : `${steps[idx - 1].city} - ${step.city}`}
+                                            : `${visible_steps[idx - 1].city} - ${step.city}`}
                                     </div>
                                 </div>
                             </Popup>

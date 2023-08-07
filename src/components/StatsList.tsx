@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 import { isAfter, isBefore, isSameDay } from 'date-fns'
 import { useQueries } from 'react-query'
 import { getScores, getUsers } from '../services/webservices'
@@ -28,7 +30,7 @@ const StatsList = () => {
     ])
     const [{ data: scores }, { data: users }] = queries
 
-    // Changer pas le user selector custom
+    // TODO Changer pas le user selector custom
     const user = (users ?? [])[0]
 
     const status = queries.some((q) => q.isLoading)

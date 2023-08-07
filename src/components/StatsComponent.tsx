@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { VictoryChart, VictoryScatter, VictoryLine, VictoryBar } from 'victory'
 
 interface Props {
