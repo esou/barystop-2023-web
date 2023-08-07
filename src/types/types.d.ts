@@ -78,3 +78,14 @@ interface ScorePerUser extends UserData {
 }
 
 declare type CardStatus = 'loading' | 'error' | 'fetched'
+
+interface StatsPoint {
+    x: number
+    y: number
+}
+
+interface StatsData {
+    minDomain: StatsPoint
+    maxDomain: StatsPoint
+    datas: StatsPoint[]
+}

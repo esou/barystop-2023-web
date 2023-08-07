@@ -36,32 +36,21 @@ const InstagramFeed = () => {
     return (
         <Card status={status} header={<Title type="card">Des nouvelles de la compétition</Title>}>
             <Grid columns={3} gridTemplateRows={3}>
-                {content.slice(0, 14).map((itm, idx) => (
-                    <>
-                        {idx === 2 && (
-                            <AspectRatio
-                                key={'fixed_ig_link'}
-                                onClick={() =>
-                                    window.open(
-                                        'https://instagram.com/barystop?igshid=MmIzYWVlNDQ5Yg=='
-                                    )
-                                }
-                                cursor="pointer">
-                                <styled.img
-                                    src={'./barystop_qr.png'}
-                                    alt="Instagram page"
-                                    objectFit="cover"
-                                />
-                            </AspectRatio>
-                        )}
-                        <AspectRatio
-                            ratio={1}
-                            key={idx}
-                            onClick={() => window.open(itm.permalink)}
-                            cursor="pointer">
-                            <InstagramItem itm={itm} />
-                        </AspectRatio>
-                    </>
+                <AspectRatio
+                    onClick={() =>
+                        window.open('https://instagram.com/barystop?igshid=MmIzYWVlNDQ5Yg==')
+                    }
+                    cursor="pointer">
+                    <styled.img src={'./barystop_qr.png'} alt="Instagram page" objectFit="cover" />
+                </AspectRatio>
+                {content.slice(0, 11).map((itm, idx) => (
+                    <AspectRatio
+                        key={idx}
+                        ratio={1}
+                        onClick={() => window.open(itm.permalink)}
+                        cursor="pointer">
+                        <InstagramItem itm={itm} />
+                    </AspectRatio>
                 ))}
             </Grid>
         </Card>

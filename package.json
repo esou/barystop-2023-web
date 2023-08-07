@@ -25,11 +25,9 @@
         "react-loader-spinner": "^5.3.4",
         "react-query": "^3.39.3",
         "react-router-dom": "^6.14.2",
-        "react-slick": "^0.29.0",
-        "slick-carousel": "^1.8.1"
+        "victory": "^36.6.11"
     },
     "devDependencies": {
-        "@types/react-slick": "^0.23.10",
         "@pandacss/dev": "^0.9.0",
         "@types/leaflet": "^1.9.3",
         "@types/react": "^18.2.15",
