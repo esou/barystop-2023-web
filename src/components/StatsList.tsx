@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { isAfter, isBefore, isSameDay } from 'date-fns'
 import { useQueries } from 'react-query'
 import { getScores, getUsers } from '../services/webservices'
