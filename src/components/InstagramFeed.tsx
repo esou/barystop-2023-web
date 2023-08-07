@@ -5,21 +5,20 @@ import { getInstagrams } from '../services/webservices'
 import Card from './Card'
 import { AspectRatio, Grid, styled } from '../../styled-system/jsx'
 import Title from './Title'
+import { gridItem } from '../../styled-system/patterns'
+import { useQuery } from 'react-query'
 
-const InstagramFeed = () => {
-    const [status, setStatus] = React.useState<CardStatus>()
-    const [content, setContent] = React.useState<InstagramItem[]>([])
+interface Props {
+    limit?: number
+}
 
-    React.useEffect(() => {
-        getInstagrams()
-            .then((res) => {
-                setContent(res)
-                setStatus('fetched')
-            })
-            .catch(() => {
-                setStatus('error')
-            })
-    }, [])
+const InstagramFeed: React.FC<Props> = ({ limit = 11 }) => {
+    const {
+        data: content = [],
+        isLoading,
+        isError,
+    } = useQuery({ queryFn: () => getInstagrams(), queryKey: 'Instagrams' })
+    const status = isLoading ? 'loading' : isError ? 'error' : 'fetched'
 
     const InstagramItem = ({ itm }: { itm: InstagramItem }) => {
         switch (itm.media_type) {
@@ -34,16 +33,17 @@ const InstagramFeed = () => {
     }
 
     return (
-        <Card status={status} header={<Title type="card">Des nouvelles de la compétition</Title>}>
-            <Grid columns={3} gridTemplateRows={3}>
+        <Card status={status} header={<Title type="card">En direct</Title>}>
+            <Grid columns={3} height={'100%'}>
                 <AspectRatio
                     onClick={() =>
                         window.open('https://instagram.com/barystop?igshid=MmIzYWVlNDQ5Yg==')
                     }
-                    cursor="pointer">
+                    cursor="pointer"
+                    className={gridItem({ colSpan: 2, rowSpan: 2 })}>
                     <styled.img src={'./barystop_qr.png'} alt="Instagram page" objectFit="cover" />
                 </AspectRatio>
-                {content.slice(0, 11).map((itm, idx) => (
+                {content.slice(0, limit).map((itm, idx) => (
                     <AspectRatio
                         key={idx}
                         ratio={1}

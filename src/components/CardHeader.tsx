@@ -7,7 +7,7 @@ const cardHeaderStyles = cva({
     },
     variants: {
         color: {
-            dark: { bg: 'secondary', color: 'white', marginX: -2, marginTop: -2, marginBottom: 2 },
+            dark: { bg: 'secondary', color: 'white' },
             light: { bg: 'white', color: 'secondary' },
         },
     },

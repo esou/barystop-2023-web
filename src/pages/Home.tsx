@@ -11,10 +11,10 @@ const Home: React.FC = () => {
         <Grid
             bgGradient={'to-br'}
             gradientFrom={'sky.200'}
-            gradientTo={'secondary'}
+            gradientTo={'primary'}
             height={'100%'}
             width={'100%'}
-            columns={2}
+            columns={4}
             gap={3}
             padding={3}
             smDown={{ display: 'flex', flexDirection: 'column' }}>
@@ -26,16 +26,16 @@ const Home: React.FC = () => {
                 rowSpan={1}>
                 <Today />
             </GridItem>
-            <GridItem colStart={2} colSpan={1} rowStart={1} rowSpan={1}>
+            <GridItem colSpan={2}>
                 <MapComponent />
             </GridItem>
-            <GridItem colStart={1} colSpan={1} rowStart={2} rowSpan={1}>
-                <InstagramFeed />
+            <GridItem>
+                <InstagramFeed limit={5} />
             </GridItem>
-            <GridItem colStart={2} colSpan={1} rowStart={2} rowSpan={1}>
+            <GridItem>
                 <RankingList />
             </GridItem>
-            <GridItem colStart={1} colSpan={2} colEnd={2} rowStart={3} rowSpan={1}>
+            <GridItem colSpan={3}>
                 <StatsList />
             </GridItem>
         </Grid>

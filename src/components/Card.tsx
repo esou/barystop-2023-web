@@ -10,19 +10,30 @@ const cardStyle = cva({
     base: {
         display: 'flex',
         flexDirection: 'column',
-        padding: '2',
         bg: 'white',
         borderRadius: 'md',
         boxShadow: 'sm',
         height: '100%',
         position: 'relative',
+        '& .ContentContainer': {
+            padding: 2,
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+        },
     },
     variants: {
         type: {
             bordered: {
                 borderWidth: 2,
                 borderColor: 'secondary',
-                borderRadius: 0,
+            },
+        },
+        withoutPadding: {
+            true: {
+                '& .ContentContainer': {
+                    padding: 0,
+                },
             },
         },
     },
@@ -35,7 +46,7 @@ type Props = PropsWithChildren<{
 }> &
     RecipeVariantProps<typeof cardStyle>
 
-const Card: React.FC<Props> = ({ status, children, header, headerVariant, type }) => {
+const Card: React.FC<Props> = ({ status, children, header, headerVariant, ...cardVariants }) => {
     const renderContent = () => {
         switch (status) {
             case 'error':
@@ -65,9 +76,9 @@ const Card: React.FC<Props> = ({ status, children, header, headerVariant, type }
         }
     }
     return (
-        <div className={cardStyle({ type })}>
+        <div className={cardStyle(cardVariants)}>
             {header && <CardHeader {...headerVariant}>{header}</CardHeader>}
-            {renderContent()}
+            <div className="ContentContainer">{renderContent()}</div>
         </div>
     )
 }

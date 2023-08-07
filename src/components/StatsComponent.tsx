@@ -1,21 +1,21 @@
 import { VictoryChart, VictoryScatter, VictoryLine, VictoryBar } from 'victory'
+import Title from './Title'
+import { token } from '../../styled-system/tokens'
 
 interface Props {
     title: string
     stats: StatsData
     type?: 'line' | 'bar'
+    className?: string
 }
 
-const StatsComponent = ({ title, stats, type = 'line' }: Props) => {
+const StatsComponent = ({ title, stats, type = 'line', className }: Props) => {
     switch (type) {
         case 'line':
             return (
-                <>
-                    <div>
-                        <div>{title}</div>
-                    </div>
+                <div className={className}>
+                    <Title>{title}</Title>
                     <VictoryChart
-                        height={300}
                         domain={{
                             x: [stats.minDomain.x, stats.maxDomain.x],
                             y: [stats.minDomain.y, stats.maxDomain.y],
@@ -24,7 +24,7 @@ const StatsComponent = ({ title, stats, type = 'line' }: Props) => {
                             data={stats.datas}
                             style={{
                                 data: {
-                                    stroke: '#F00',
+                                    stroke: token.var('colors.secondary'),
                                 },
                             }}
                             animate={{
@@ -33,7 +33,7 @@ const StatsComponent = ({ title, stats, type = 'line' }: Props) => {
                             }}
                         />
                         <VictoryScatter
-                            style={{ data: { fill: '#F00' } }}
+                            style={{ data: { fill: token.var('colors.primary') } }}
                             size={5}
                             data={stats.datas}
                             animate={{
@@ -42,16 +42,13 @@ const StatsComponent = ({ title, stats, type = 'line' }: Props) => {
                             }}
                         />
                     </VictoryChart>
-                </>
+                </div>
             )
         case 'bar':
             return (
-                <>
-                    <div>
-                        <div>{title}</div>
-                    </div>
+                <div className={className}>
+                    <Title>{title}</Title>
                     <VictoryChart
-                        height={300}
                         domain={{
                             x: [stats.minDomain.x, stats.maxDomain.x],
                             y: [stats.minDomain.y, stats.maxDomain.y],
@@ -60,7 +57,7 @@ const StatsComponent = ({ title, stats, type = 'line' }: Props) => {
                             data={stats.datas}
                             style={{
                                 data: {
-                                    fill: '#F00',
+                                    fill: token.var('colors.secondary'),
                                 },
                             }}
                             alignment="start"
@@ -70,7 +67,7 @@ const StatsComponent = ({ title, stats, type = 'line' }: Props) => {
                             }}
                         />
                     </VictoryChart>
-                </>
+                </div>
             )
     }
 }

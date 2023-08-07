@@ -4,14 +4,13 @@ import { isAfter, isSameDay } from 'date-fns'
 import { useQueries } from 'react-query'
 import { getScores, getUsers } from '../services/webservices'
 import CustomDatePicker from './CustomDatePicker'
-import { AspectRatio, HStack, Stack, styled, Flex } from '../../styled-system/jsx'
+import { HStack, Stack, styled, Flex } from '../../styled-system/jsx'
 
 import Card from './Card'
 import { circle } from '../../styled-system/patterns'
 import Title from './Title'
+import RankingTypePicker from './RankingTypePicker'
 
-const RANKING_TYPES: RankingType[] = ['yellow', 'red', 'green']
-const RANKING_LABELS: Record<RankingType, string> = { green: 'vert', red: 'rouge', yellow: 'jaune' }
 const SCORE_TYPES: Record<RankingType, ScoreType> = { green: 'point', red: 'point', yellow: 'time' }
 
 const RankingList = () => {
@@ -138,40 +137,7 @@ const RankingList = () => {
                     <Title type="card" mb={-2}>
                         Le classement
                     </Title>
-                    <HStack justifyContent={'space-evenly'} cursor={'pointer'}>
-                        {RANKING_TYPES.map((rankingType, idx) => {
-                            const selected = rankingType === type
-                            return (
-                                <HStack
-                                    key={idx}
-                                    height={'100%'}
-                                    width={'100%'}
-                                    borderBottomWidth={selected ? 3 : 0}
-                                    borderBottomColor={
-                                        rankingType === 'yellow'
-                                            ? 'yellow.400'
-                                            : rankingType === 'red'
-                                            ? 'red.400'
-                                            : 'green.400'
-                                    }
-                                    justifyContent={'center'}>
-                                    <AspectRatio ratio={1} width={'1/5'}>
-                                        <img src={`./${rankingType}.png`} width={'100%'} />
-                                    </AspectRatio>
-                                    <styled.button
-                                        key={rankingType}
-                                        color={'inherit'}
-                                        padding={2}
-                                        onClick={() => selectTab(rankingType)}
-                                        fontWeight={selected ? 'bold' : 'medium'}
-                                        textTransform={'uppercase'}
-                                        cursor={'pointer'}>
-                                        {RANKING_LABELS[rankingType]}
-                                    </styled.button>
-                                </HStack>
-                            )
-                        })}
-                    </HStack>
+                    <RankingTypePicker selectType={selectTab} selectedType={type} />
                 </Stack>
             }>
             <CustomDatePicker
