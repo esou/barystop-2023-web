@@ -16,6 +16,11 @@ const titleStyles = cva({
                 lineHeight: 'tight',
                 fontSize: 'xl',
             },
+            stats: {
+                bg: 'primary',
+                color: 'secondary',
+                fontWeight: 'light',
+            },
         },
     },
 })

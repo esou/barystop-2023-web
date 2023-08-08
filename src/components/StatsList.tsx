@@ -3,14 +3,14 @@ import * as React from 'react'
 import { isAfter, isBefore, isSameDay } from 'date-fns'
 import { useQueries } from 'react-query'
 import { getScores, getUsers } from '../services/webservices'
-import { Grid, HStack, Stack } from '../../styled-system/jsx'
+import { Grid, HStack, Stack, styled } from '../../styled-system/jsx'
 
 import Card from './Card'
 import Title from './Title'
 import StatsComponent from './StatsComponent'
 import RankingTypePicker from './RankingTypePicker'
 import { css } from '../../styled-system/css'
-import { stack } from '../../styled-system/patterns'
+import { stack, circle, center } from '../../styled-system/patterns'
 
 const SCORE_TYPES: Record<RankingType, ScoreType> = { green: 'point', red: 'point', yellow: 'time' }
 
@@ -22,6 +22,7 @@ const DEFAULT_STATS: StatsData = {
 
 const StatsList = () => {
     const [type, setType] = React.useState<RankingType>('yellow')
+    const [selectedUser, selectUser] = React.useState<UserData | undefined>(undefined)
 
     const [, startTransition] = React.useTransition()
 
@@ -31,8 +32,9 @@ const StatsList = () => {
     ])
     const [{ data: scores }, { data: users }] = queries
 
-    // TODO Changer pas le user selector custom
-    const user = (users ?? [])[0]
+    React.useEffect(() => {
+        if (!selectedUser) selectUser(users?.[0])
+    }, [users])
 
     const status = queries.some((q) => q.isLoading)
         ? 'loading'
@@ -88,6 +90,10 @@ const StatsList = () => {
         [users, scores, type]
     )
 
+    if (!selectedUser) {
+        return <Card status={status} />
+    }
+
     const score_evolution = (scores ?? []).reduce((acc, cur, idx) => {
         if (isAfter(new Date(cur.date), new Date())) {
             return acc
@@ -96,7 +102,7 @@ const StatsList = () => {
         const previous_y =
             idx !== 0 &&
             (SCORE_TYPES[type] === 'time' ? acc.datas[idx - 1].y * 60 : acc.datas[idx - 1].y)
-        const total_y = previous_y ? cur[user?.id] + previous_y : cur[user?.id]
+        const total_y = previous_y ? cur[selectedUser?.id] + previous_y : cur[selectedUser?.id]
         const y = SCORE_TYPES[type] === 'time' ? total_y / 60 : total_y
         return {
             minDomain: { x: Math.min(acc.minDomain.x, x), y: Math.min(acc.minDomain.y, y) },
@@ -110,7 +116,7 @@ const StatsList = () => {
             return acc
         }
         const x = acc.datas.length + 1
-        const y = SCORE_TYPES[type] === 'time' ? cur[user.id] / 60 : cur[user.id]
+        const y = SCORE_TYPES[type] === 'time' ? cur[selectedUser.id] / 60 : cur[selectedUser.id]
         return {
             minDomain: { x: Math.min(acc.minDomain.x, x), y: Math.min(acc.minDomain.y, y) },
             maxDomain: { x: Math.max(acc.maxDomain.x, x), y: Math.max(acc.maxDomain.y, y) },
@@ -123,7 +129,7 @@ const StatsList = () => {
             return acc
         }
         const x = acc.datas.length + 1
-        const y = cur.users.findIndex((a) => a.id === user.id) + 1
+        const y = cur.users.findIndex((a) => a.id === selectedUser.id) + 1
         return {
             minDomain: { x: 1, y: 1 },
             maxDomain: { x: Math.max(acc.maxDomain.x, x), y: (users ?? []).length },
@@ -133,7 +139,8 @@ const StatsList = () => {
 
     const total_score = score_evolution.datas[score_evolution.datas.length - 1]?.y
     const user_position =
-        sorted_scores[sorted_scores.length - 1]?.users.findIndex((a) => a.id === user.id) + 1
+        sorted_scores[sorted_scores.length - 1]?.users.findIndex((a) => a.id === selectedUser.id) +
+        1
     const position_libelle = user_position === 1 ? 'er' : 'ème'
 
     const selectTab = (rankingType: RankingType) => startTransition(() => setType(rankingType))
@@ -157,13 +164,57 @@ const StatsList = () => {
                         height: '100%',
                         borderBottomLeftRadius: 'sm',
                         color: 'white',
+                        justifyContent: 'space-evenly',
+                        padding: 2,
                     })}>
-                    User Selector
+                    {users?.map((user) => {
+                        const selected = selectedUser.id === user.id
+                        return (
+                            <styled.div
+                                onClick={() => selectUser(user)}
+                                _hover={{
+                                    cursor: 'pointer',
+                                    '& > span': {
+                                        opacity: selected ? '1' : '0.75',
+                                    },
+                                }}
+                                className={center({ flexDir: 'column' })}>
+                                <img
+                                    src={user.picture}
+                                    alt={user.username}
+                                    className={circle({
+                                        size: 35,
+                                        objectFit: 'cover',
+                                        borderWidth: '2px',
+                                        borderColor: selected ? 'primary' : 'primary',
+                                        borderStyle: selected ? 'solid' : 'inset',
+                                        zIndex: 1,
+                                    })}
+                                />
+                                <styled.span
+                                    fontSize={'xs'}
+                                    bg={'primary'}
+                                    color={selected ? 'secondary' : 'black'}
+                                    borderRadius="full"
+                                    paddingX={2}
+                                    marginTop={-1}
+                                    opacity={selected ? '1' : '0'}>
+                                    {user.username}
+                                </styled.span>
+                            </styled.div>
+                        )
+                    })}
                 </Stack>
                 {has_datas ? (
-                    <Grid height={'100%'} width={'100%'} columns={2} margin={2}>
-                        <Stack alignItems={'center'} justify="center">
-                            <Title>{`Statistiques de ${user?.username}`}</Title>
+                    <Grid
+                        height={'100%'}
+                        width={'100%'}
+                        columns={2}
+                        margin={2}
+                        padding={2}
+                        smDown={{ display: 'flex', flexDirection: 'column' }}>
+                        <Stack>
+                            <Title type="stats">{`Statistiques de ${selectedUser?.username}`}</Title>
                             <span>{`Position actuelle : ${user_position}${position_libelle}`}</span>
                             <span>
                                 {` ${
@@ -178,6 +229,7 @@ const StatsList = () => {
                             title={'Position au classement général'}
                             type="line"
                             stats={position_par_jour}
+                            inverted
                         />
                         <StatsComponent
                             className={stack({ justify: 'center', gap: 0 })}
