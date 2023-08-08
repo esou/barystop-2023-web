@@ -22,6 +22,11 @@ export default defineConfig({
                         secondary: { value: '#F3A361' },
                     },
                 },
+                fonts: {
+                    paris: {
+                        value: 'var(--fonts-paris2024), sans-serif',
+                    },
+                },
             },
         },
     },
@@ -30,9 +35,7 @@ export default defineConfig({
             minHeight: '100vh',
             minWidth: '100%',
             display: 'flex',
-        },
-        '#root': {
-            width: '-webkit-fill-available',
+            fontFamily: 'paris',
         },
     },
 
