@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: 'Paris2024';
-  src: url("https://db.onlinewebfonts.com/t/4eb57c4bdd98832e4644535022618bc9.ttf") format("truetype");
+  src: url("src/assets/Paris2024-Variable.ttf") format("truetype");
 }
 
 :root{
