@@ -2,11 +2,12 @@ import axios from 'axios'
 import { format } from 'date-fns'
 
 const NO_CACHE = `?timestamp=${new Date().getTime()}`
+const BRANCH = 'dev'
 
 const INSTAGRAM_PATH = './instagram.json'
 
 const STEPS_PATH =
-    'https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/main/steps/steps.json' +
+    `https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/${BRANCH}/steps/steps.json` +
     NO_CACHE
 
 // const STEP_DETAILS_PATH = (stepId: string) =>
@@ -18,18 +19,18 @@ const STEPS_PATH =
 //     NO_CACHE
 
 const USERS_PATH =
-    'https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/main/users/users.json' +
+    `https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/${BRANCH}/users/users.json` +
     NO_CACHE
 
 const SCORES_PATH = {
     yellow:
-        'https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/main/scores/scores_yellow.json' +
+        `https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/${BRANCH}/scores/scores_yellow.json` +
         NO_CACHE,
     red:
-        'https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/main/scores/scores_red.json' +
+        `https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/${BRANCH}/scores/scores_red.json` +
         NO_CACHE,
     green:
-        'https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/main/scores/scores_green.json' +
+        `https://raw.githubusercontent.com/rpzcancoillote/urban-guacamole/${BRANCH}/scores/scores_green.json` +
         NO_CACHE,
 }
 
