@@ -39,7 +39,6 @@ export default defineConfig({
         },
         '#root': {
             width: '100%',
-            height: '100%',
         },
     },
 
