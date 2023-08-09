@@ -178,7 +178,8 @@ const StatsList = () => {
                                         opacity: selected ? '1' : '0.75',
                                     },
                                 }}
-                                className={center({ flexDir: 'column' })}>
+                                className={center({ flexDir: 'column' })}
+                                key={user.id}>
                                 <img
                                     src={user.picture}
                                     alt={user.username}

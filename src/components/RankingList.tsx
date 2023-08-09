@@ -14,7 +14,7 @@ import RankingTypePicker from './RankingTypePicker'
 const SCORE_TYPES: Record<RankingType, ScoreType> = { green: 'point', red: 'point', yellow: 'time' }
 
 const RankingList = () => {
-    const [dateIdxSelected, setDateIdxSelected] = React.useState<number>(0)
+    const [dateIdxSelected, setDateIdxSelected] = React.useState<number>()
     const [type, setType] = React.useState<RankingType>('yellow')
     const [, startTransition] = React.useTransition()
 
@@ -59,13 +59,19 @@ const RankingList = () => {
         ]
     }, [] as ScorePerDay[])
 
+    React.useEffect(() => {
+        if (dateIdxSelected === undefined && sorted_scores.length) {
+            setDateIdxSelected(sorted_scores.length - 1)
+        }
+    }, [sorted_scores, dateIdxSelected])
+
     const displaying_dates = (scores ?? []).map((s) => s.date)
-    const displaying_scores = sorted_scores[dateIdxSelected]
+    const displaying_scores = dateIdxSelected !== undefined && sorted_scores[dateIdxSelected]
 
     const renderUserRank = (userScore: ScorePerUser, index: number) => {
         const current_position = index
         const previous_position =
-            dateIdxSelected === 0
+            dateIdxSelected === 0 || dateIdxSelected === undefined
                 ? index
                 : sorted_scores[dateIdxSelected - 1].users.findIndex((toto) => {
                       return toto.id === userScore.id
@@ -74,7 +80,7 @@ const RankingList = () => {
         const difference_position = previous_position - current_position
         const score = () => {
             if (SCORE_TYPES[type] === 'time') {
-                const best_time = displaying_scores.users[0].score
+                const best_time = displaying_scores && displaying_scores.users[0].score
                 const fullseconds = index === 0 ? userScore.score : userScore.score - best_time
                 const hours = Math.trunc(fullseconds / 3600)
                 const minutes = Math.trunc((fullseconds - 3600 * hours) / 60)
@@ -140,11 +146,15 @@ const RankingList = () => {
                     <RankingTypePicker selectType={selectTab} selectedType={type} />
                 </Stack>
             }>
-            <CustomDatePicker
-                dateList={displaying_dates}
-                dateIdxSelected={dateIdxSelected}
-                setDateIdxSelected={setDateIdxSelected}
-            />
+            {dateIdxSelected && (
+                <CustomDatePicker
+                    dateList={displaying_dates}
+                    dateIdxSelected={dateIdxSelected}
+                    setDateIdxSelected={(idx: number) => {
+                        setDateIdxSelected(idx)
+                    }}
+                />
+            )}
             {displaying_scores && (
                 <Stack gap="0">
                     {displaying_scores.users.map((item, index) => renderUserRank(item, index))}

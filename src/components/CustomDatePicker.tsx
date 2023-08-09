@@ -1,11 +1,10 @@
 import { format, isBefore } from 'date-fns'
-import * as React from 'react'
 import { Flex, HStack, Square, styled } from '../../styled-system/jsx'
 
 interface Props {
     dateList: string[]
     dateIdxSelected: number
-    setDateIdxSelected: React.Dispatch<React.SetStateAction<number>>
+    setDateIdxSelected: (idx: number) => void
 }
 
 const CustomDatePicker = ({ dateList, dateIdxSelected, setDateIdxSelected }: Props) => {
@@ -15,9 +14,8 @@ const CustomDatePicker = ({ dateList, dateIdxSelected, setDateIdxSelected }: Pro
                 const selected = dateIdxSelected === idx
                 const disabled = isBefore(new Date(), new Date(itm))
                 return (
-                    <Square>
+                    <Square key={idx}>
                         <styled.button
-                            key={idx}
                             cursor={disabled ? 'wait' : 'pointer'}
                             onClick={() => setDateIdxSelected(idx)}
                             disabled={disabled}
