@@ -26,6 +26,13 @@ const StatsList = () => {
 
     const [, startTransition] = React.useTransition()
 
+    useQueries(
+        (Object.keys(SCORE_TYPES) as RankingType[]).map((t) => ({
+            queryKey: ['Scores', t],
+            queryFn: () => getScores(t),
+        }))
+    )
+
     const queries = useQueries([
         { queryKey: ['Scores', type], queryFn: () => getScores(type) },
         { queryKey: ['Users'], queryFn: () => getUsers() },
@@ -254,7 +261,7 @@ const StatsList = () => {
                     </Grid>
                 ) : (
                     <Stack align={'center'} justify={'center'} height={'100%'} width={'100%'}>
-                        <img src="./calculatrice.gif" style={{ height: 100, width: 100 }} />
+                        <styled.img src="./calculatrice.gif" height={'100px'} />
                         <div>{'Les calculs ne sont pas bons Kévin.'}</div>
                         <div>{'Les statistiques arrivent bientôt !'}</div>
                     </Stack>
