@@ -146,7 +146,7 @@ const RankingList = () => {
                     <RankingTypePicker selectType={selectTab} selectedType={type} />
                 </Stack>
             }>
-            {dateIdxSelected && (
+            {dateIdxSelected !== undefined && (
                 <CustomDatePicker
                     dateList={displaying_dates}
                     dateIdxSelected={dateIdxSelected}
