@@ -4,7 +4,9 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { setDefaultOptions } from 'date-fns'
 import { fr } from 'date-fns/locale'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+    defaultOptions: { queries: { staleTime: Infinity, refetchInterval: 60 * 60 * 1000 } },
+})
 
 function App() {
     setDefaultOptions({ locale: fr })
