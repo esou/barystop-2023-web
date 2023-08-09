@@ -19,9 +19,9 @@ const MapComponent = () => {
 
     const status = isLoading ? 'loading' : isError ? 'error' : 'fetched'
 
-    const visible_steps = (steps ?? []).filter((s) => isBefore(new Date(s.date), new Date()))
+    const visibleSteps = (steps ?? []).filter((s) => isBefore(new Date(s.date), new Date()))
 
-    const polyline = visible_steps.map((a) => [
+    const polyline = visibleSteps.map((a) => [
         a.lat as unknown as LatLngExpression,
         a.lon as unknown as LatLngExpression,
     ])
@@ -35,11 +35,11 @@ const MapComponent = () => {
                 <MapContainer
                     bounds={polyline as unknown as LatLngBoundsExpression}
                     center={
-                        visible_steps.length === 1
-                            ? { lat: visible_steps[0].lat, lng: visible_steps[0].lon }
+                        visibleSteps.length === 1
+                            ? { lat: visibleSteps[0].lat, lng: visibleSteps[0].lon }
                             : DEFAULT_LOC
                     }
-                    zoom={visible_steps.length < 2 ? DEFAULT_ZOOM : undefined}
+                    zoom={visibleSteps.length < 2 ? DEFAULT_ZOOM : undefined}
                     style={{
                         height: '100%',
                         width: '100%',
@@ -50,7 +50,7 @@ const MapComponent = () => {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     <Polyline positions={polyline} />
-                    {visible_steps.map((step, idx) => (
+                    {visibleSteps.map((step, idx) => (
                         <Marker key={idx} position={{ lat: step.lat, lng: step.lon }}>
                             <Popup>
                                 <div>
@@ -62,7 +62,7 @@ const MapComponent = () => {
                                     <div>
                                         {idx === 0
                                             ? `Départ de ${step.city}`
-                                            : `${visible_steps[idx - 1].city} - ${step.city}`}
+                                            : `${visibleSteps[idx - 1].city} - ${step.city}`}
                                     </div>
                                 </div>
                             </Popup>

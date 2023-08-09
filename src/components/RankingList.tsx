@@ -29,20 +29,20 @@ const RankingList = () => {
         ? 'error'
         : 'fetched'
 
-    const sorted_scores = (scores ?? []).reduce((acc, cur) => {
+    const sortedScores = (scores ?? []).reduce((acc, cur) => {
         // On va mapper chaque jour pour calculer le score de chacun chaque jour
-        const date_du_jour = cur.date
-        if (isAfter(new Date(date_du_jour), new Date())) {
+        const currentDayDate = cur.date
+        if (isAfter(new Date(currentDayDate), new Date())) {
             return acc
         }
-        const scores_du_jour = (users ?? [])
+        const currentDayScores = (users ?? [])
             .map((u) => ({
                 ...u,
                 score: (scores ?? [])
                     .filter(
                         (s) =>
-                            isAfter(new Date(date_du_jour), new Date(s.date)) ||
-                            isSameDay(new Date(date_du_jour), new Date(s.date))
+                            isAfter(new Date(currentDayDate), new Date(s.date)) ||
+                            isSameDay(new Date(currentDayDate), new Date(s.date))
                     )
                     .reduce((pts, pt) => Number(pts) + pt[u.id], 0),
             }))
@@ -56,41 +56,41 @@ const RankingList = () => {
         return [
             ...acc,
             {
-                date: date_du_jour,
-                users: scores_du_jour,
+                date: currentDayDate,
+                users: currentDayScores,
             },
         ]
     }, [] as ScorePerDay[])
 
     React.useEffect(() => {
-        if (dateIdxSelected === undefined && sorted_scores.length) {
-            setDateIdxSelected(sorted_scores.length - 1)
+        if (dateIdxSelected === undefined && sortedScores.length) {
+            setDateIdxSelected(sortedScores.length - 1)
         }
-    }, [sorted_scores, dateIdxSelected])
+    }, [sortedScores, dateIdxSelected])
 
-    const displaying_dates = (scores ?? []).map((s) => s.date)
-    const displaying_scores = dateIdxSelected !== undefined && sorted_scores[dateIdxSelected]
+    const displayingDates = (scores ?? []).map((s) => s.date)
+    const displayingScores = dateIdxSelected !== undefined && sortedScores[dateIdxSelected]
 
     const renderUserRank = (userScore: ScorePerUser, index: number) => {
-        const current_position = index
-        const previous_position =
+        const currentUserRank = index
+        const previousUserRank =
             dateIdxSelected === 0 || dateIdxSelected === undefined
                 ? index
-                : sorted_scores[dateIdxSelected - 1].users.findIndex((toto) => {
+                : sortedScores[dateIdxSelected - 1].users.findIndex((toto) => {
                       return toto.id === userScore.id
                   })
 
-        const difference_position = previous_position - current_position
+        const differenceRank = previousUserRank - currentUserRank
         const score = () => {
             if (SCORE_TYPES[type] === 'time') {
-                const best_time = displaying_scores && displaying_scores.users[0].score
-                const fullseconds = index === 0 ? userScore.score : userScore.score - best_time
+                const bestTime = displayingScores && displayingScores.users[0].score
+                const fullseconds = index === 0 ? userScore.score : userScore.score - bestTime
                 const hours = Math.trunc(fullseconds / 3600)
                 const minutes = Math.trunc((fullseconds - 3600 * hours) / 60)
                 const seconds = Math.trunc(fullseconds - 3600 * hours - 60 * minutes)
 
-                const libelle = hours + 'h ' + minutes + "' " + seconds + "''"
-                return index === 0 ? libelle : '+ ' + libelle
+                const label = hours + 'h ' + minutes + "' " + seconds + "''"
+                return index === 0 ? label : '+ ' + label
             }
 
             return userScore.score
@@ -115,17 +115,17 @@ const RankingList = () => {
                     <Flex>{userScore.username}</Flex>
                 </HStack>
                 <HStack gap={5}>
-                    {!!difference_position && (
+                    {!!differenceRank && (
                         <styled.span
                             color={
-                                difference_position === 0
+                                differenceRank === 0
                                     ? undefined
-                                    : difference_position > 0
+                                    : differenceRank > 0
                                     ? 'green.500'
                                     : 'red.500'
                             }
                             width="30px">
-                            {difference_position > 0 && '+'} {difference_position}
+                            {differenceRank > 0 && '+'} {differenceRank}
                         </styled.span>
                     )}
                     <styled.span width="100px" textAlign="right">
@@ -150,16 +150,16 @@ const RankingList = () => {
                 </Stack>
             }>
             <CustomDatePicker
-                dateList={displaying_dates}
+                dateList={displayingDates}
                 dateIdxSelected={dateIdxSelected}
                 setDateIdxSelected={(idx: number) => {
                     setDateIdxSelected(idx)
                 }}
             />
 
-            {displaying_scores ? (
+            {displayingScores ? (
                 <Stack gap="0">
-                    {displaying_scores.users.map((item, index) => renderUserRank(item, index))}
+                    {displayingScores.users.map((item, index) => renderUserRank(item, index))}
                 </Stack>
             ) : (
                 <Stack

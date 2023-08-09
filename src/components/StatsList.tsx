@@ -42,10 +42,10 @@ const StatsList = () => {
         ? 'error'
         : 'fetched'
 
-    const has_datas = (scores ?? []).findIndex((a) => isBefore(new Date(a.date), new Date())) !== -1
-    const display_score = (score_in_number: number) => {
+    const hasData = (scores ?? []).findIndex((a) => isBefore(new Date(a.date), new Date())) !== -1
+    const displayScore = (scoreAsNumber: number) => {
         if (SCORE_TYPES[type] === 'time') {
-            const milliseconds = score_in_number * 60
+            const milliseconds = scoreAsNumber * 60
             const hours = Math.trunc(milliseconds / 3600)
             const minutes = Math.trunc((milliseconds - 3600 * hours) / 60)
             const seconds = Math.trunc(milliseconds - 3600 * hours - 60 * minutes)
@@ -53,15 +53,15 @@ const StatsList = () => {
             const libelle = hours + 'h ' + minutes + "' " + seconds + "''"
             return libelle
         }
-        return score_in_number
+        return scoreAsNumber
     }
 
-    const sorted_scores = React.useMemo(
+    const sortedScores = React.useMemo(
         () =>
             (scores ?? []).reduce((acc, cur) => {
                 // On va mapper chaque jour pour calculer le score de chacun chaque jour
-                const date_du_jour = cur.date
-                const scores_du_jour = (users ?? [])
+                const currentDayDate = cur.date
+                const currentDayScore = (users ?? [])
                     .map((u) => ({
                         ...u,
                         score: (scores ?? [])
@@ -82,8 +82,8 @@ const StatsList = () => {
                 return [
                     ...acc,
                     {
-                        date: date_du_jour,
-                        users: scores_du_jour,
+                        date: currentDayDate,
+                        users: currentDayScore,
                     },
                 ]
             }, [] as ScorePerDay[]),
@@ -94,16 +94,16 @@ const StatsList = () => {
         return <Card status={status} />
     }
 
-    const score_evolution = (scores ?? []).reduce((acc, cur, idx) => {
+    const scoreEvolution = (scores ?? []).reduce((acc, cur, idx) => {
         if (isAfter(new Date(cur.date), new Date())) {
             return acc
         }
         const x = acc.datas.length + 1
-        const previous_y =
+        const previousY =
             idx !== 0 &&
             (SCORE_TYPES[type] === 'time' ? acc.datas[idx - 1].y * 60 : acc.datas[idx - 1].y)
-        const total_y = previous_y ? cur[selectedUser?.id] + previous_y : cur[selectedUser?.id]
-        const y = SCORE_TYPES[type] === 'time' ? total_y / 60 : total_y
+        const totalY = previousY ? cur[selectedUser?.id] + previousY : cur[selectedUser?.id]
+        const y = SCORE_TYPES[type] === 'time' ? totalY / 60 : totalY
         return {
             minDomain: { x: Math.min(acc.minDomain.x, x), y: Math.min(acc.minDomain.y, y) },
             maxDomain: { x: Math.max(acc.maxDomain.x, x), y: Math.max(acc.maxDomain.y, y) },
@@ -111,7 +111,7 @@ const StatsList = () => {
         }
     }, DEFAULT_STATS)
 
-    const score_par_jour = (scores ?? []).reduce((acc, cur) => {
+    const scorePerDay = (scores ?? []).reduce((acc, cur) => {
         if (isAfter(new Date(cur.date), new Date())) {
             return acc
         }
@@ -124,7 +124,7 @@ const StatsList = () => {
         }
     }, DEFAULT_STATS)
 
-    const position_par_jour = sorted_scores.reduce((acc, cur) => {
+    const rankPerDay = sortedScores.reduce((acc, cur) => {
         if (isAfter(new Date(cur.date), new Date())) {
             return acc
         }
@@ -137,11 +137,10 @@ const StatsList = () => {
         }
     }, DEFAULT_STATS)
 
-    const total_score = score_evolution.datas[score_evolution.datas.length - 1]?.y
-    const user_position =
-        sorted_scores[sorted_scores.length - 1]?.users.findIndex((a) => a.id === selectedUser.id) +
-        1
-    const position_libelle = user_position === 1 ? 'er' : 'ème'
+    const totalScore = scoreEvolution.datas[scoreEvolution.datas.length - 1]?.y
+    const userRank =
+        sortedScores[sortedScores.length - 1]?.users.findIndex((a) => a.id === selectedUser.id) + 1
+    const rankLabel = userRank === 1 ? 'er' : 'ème'
 
     const selectTab = (rankingType: RankingType) => startTransition(() => setType(rankingType))
 
@@ -206,7 +205,7 @@ const StatsList = () => {
                         )
                     })}
                 </Stack>
-                {has_datas ? (
+                {hasData ? (
                     <Grid
                         height={'100%'}
                         width={'100%'}
@@ -216,20 +215,20 @@ const StatsList = () => {
                         smDown={{ display: 'flex', flexDirection: 'column' }}>
                         <Stack>
                             <Title type="stats">{`Statistiques de ${selectedUser?.username}`}</Title>
-                            <span>{`Position actuelle : ${user_position}${position_libelle}`}</span>
+                            <span>{`Position actuelle : ${userRank}${rankLabel}`}</span>
                             <span>
                                 {` ${
                                     SCORE_TYPES[type] === 'time'
                                         ? 'Temps total cumulé'
                                         : 'Score cumulé'
-                                } :  ${display_score(total_score)}`}
+                                } :  ${displayScore(totalScore)}`}
                             </span>
                         </Stack>
                         <StatsComponent
                             className={stack({ justify: 'center', gap: 0 })}
                             title={'Position au classement général'}
                             type="line"
-                            stats={position_par_jour}
+                            stats={rankPerDay}
                             inverted
                         />
                         <StatsComponent
@@ -240,7 +239,7 @@ const StatsList = () => {
                                     : 'Score obtenu par jour'
                             }
                             type="bar"
-                            stats={score_par_jour}
+                            stats={scorePerDay}
                         />
                         <StatsComponent
                             className={stack({ justify: 'center', gap: 0 })}
@@ -250,7 +249,7 @@ const StatsList = () => {
                                     : 'Évolution du score total'
                             }
                             type="line"
-                            stats={score_evolution}
+                            stats={scoreEvolution}
                         />
                     </Grid>
                 ) : (
