@@ -34,7 +34,11 @@ const MapComponent = () => {
             <Flex height={'100%'} borderBottomRadius={'sm'} overflow={'hidden'}>
                 <MapContainer
                     bounds={polyline as unknown as LatLngBoundsExpression}
-                    center={DEFAULT_LOC}
+                    center={
+                        visible_steps.length === 1
+                            ? { lat: visible_steps[0].lat, lng: visible_steps[0].lon }
+                            : DEFAULT_LOC
+                    }
                     zoom={visible_steps.length < 2 ? DEFAULT_ZOOM : undefined}
                     style={{
                         height: '100%',
