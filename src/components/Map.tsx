@@ -27,13 +27,20 @@ const MapComponent = () => {
     ])
 
     return (
-        <Card status={status} header={<Title type="card">Résumé du trajet parcouru</Title>}>
-            <Flex height={'100%'}>
+        <Card
+            status={status}
+            withoutPadding
+            header={<Title type="card">Résumé du trajet parcouru</Title>}>
+            <Flex height={'100%'} borderBottomRadius={'sm'} overflow={'hidden'}>
                 <MapContainer
                     bounds={polyline as unknown as LatLngBoundsExpression}
                     center={DEFAULT_LOC}
                     zoom={visible_steps.length < 2 ? DEFAULT_ZOOM : undefined}
-                    style={{ height: '100%', width: '100%', minHeight: '300px' }}>
+                    style={{
+                        height: '100%',
+                        width: '100%',
+                        minHeight: '300px',
+                    }}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
