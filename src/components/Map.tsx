@@ -1,5 +1,5 @@
 import Card from './Card'
-import { Flex } from '../../styled-system/jsx'
+import { Divider, Flex, Stack } from '../../styled-system/jsx'
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet'
 import { getSteps } from '../services/webservices'
 import { format, isBefore } from 'date-fns'
@@ -53,18 +53,24 @@ const MapComponent = () => {
                     {visibleSteps.map((step, idx) => (
                         <Marker key={idx} position={{ lat: step.lat, lng: step.lon }}>
                             <Popup>
-                                <div>
+                                <Stack fontFamily={'paris'} color={'secondary'}>
                                     <div>
                                         {`${format(new Date(step.date), 'dd/MM/YYYYY')} - Étape ${
                                             idx + 1
                                         }`}
                                     </div>
+                                    <Divider
+                                        color={'primary'}
+                                        thickness={'2px'}
+                                        width={'33%'}
+                                        alignSelf={'center'}
+                                    />
                                     <div>
                                         {idx === 0
                                             ? `Départ de ${step.city}`
                                             : `${visibleSteps[idx - 1].city} - ${step.city}`}
                                     </div>
-                                </div>
+                                </Stack>
                             </Popup>
                         </Marker>
                     ))}
