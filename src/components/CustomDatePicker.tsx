@@ -3,7 +3,7 @@ import { Flex, HStack, Square, styled } from '../../styled-system/jsx'
 
 interface Props {
     dateList: string[]
-    dateIdxSelected: number
+    dateIdxSelected?: number
     setDateIdxSelected: (idx: number) => void
 }
 

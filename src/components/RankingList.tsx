@@ -32,14 +32,17 @@ const RankingList = () => {
     const sorted_scores = (scores ?? []).reduce((acc, cur) => {
         // On va mapper chaque jour pour calculer le score de chacun chaque jour
         const date_du_jour = cur.date
+        if (isAfter(new Date(date_du_jour), new Date())) {
+            return acc
+        }
         const scores_du_jour = (users ?? [])
             .map((u) => ({
                 ...u,
                 score: (scores ?? [])
                     .filter(
                         (s) =>
-                            isAfter(new Date(cur.date), new Date(s.date)) ||
-                            isSameDay(new Date(cur.date), new Date(s.date))
+                            isAfter(new Date(date_du_jour), new Date(s.date)) ||
+                            isSameDay(new Date(date_du_jour), new Date(s.date))
                     )
                     .reduce((pts, pt) => Number(pts) + pt[u.id], 0),
             }))
@@ -146,18 +149,27 @@ const RankingList = () => {
                     <RankingTypePicker selectType={selectTab} selectedType={type} />
                 </Stack>
             }>
-            {dateIdxSelected !== undefined && (
-                <CustomDatePicker
-                    dateList={displaying_dates}
-                    dateIdxSelected={dateIdxSelected}
-                    setDateIdxSelected={(idx: number) => {
-                        setDateIdxSelected(idx)
-                    }}
-                />
-            )}
-            {displaying_scores && (
+            <CustomDatePicker
+                dateList={displaying_dates}
+                dateIdxSelected={dateIdxSelected}
+                setDateIdxSelected={(idx: number) => {
+                    setDateIdxSelected(idx)
+                }}
+            />
+
+            {displaying_scores ? (
                 <Stack gap="0">
                     {displaying_scores.users.map((item, index) => renderUserRank(item, index))}
+                </Stack>
+            ) : (
+                <Stack
+                    align="center"
+                    justify="center"
+                    height="100%"
+                    width="100%"
+                    padding={4}
+                    textAlign="center">
+                    <p>La compétition n'a pas commencé</p>
                 </Stack>
             )}
         </Card>
