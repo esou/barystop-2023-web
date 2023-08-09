@@ -37,6 +37,10 @@ export default defineConfig({
             display: 'flex',
             fontFamily: 'paris',
         },
+        '#root': {
+            width: '100%',
+            height: '100%',
+        },
     },
 
     // The output directory for your css system
