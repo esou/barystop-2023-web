@@ -57,7 +57,10 @@ const getSteps = (): Promise<StepData[]> => axios.get(STEPS_PATH).then((res) => 
 // const getPolygons = (): Promise<CityPolygon[]> =>
 //     axios.get(POLYGONS_PATH).then((res) => res.data.polygons)
 
-const getUsers = (): Promise<UserData[]> => axios.get(USERS_PATH).then((res) => res.data.users)
+const getUsers = (): Promise<UserData[]> =>
+    axios
+        .get<{ users: UserData[] }>(USERS_PATH)
+        .then((res) => res.data.users.sort((a, b) => a.username.localeCompare(b.username)))
 
 const getScores = (type: RankingType): Promise<ScorePerUserPerDay[]> =>
     axios.get(SCORES_PATH[type]).then((res) => res.data.scores)
