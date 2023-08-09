@@ -2,7 +2,7 @@ import axios from 'axios'
 import { format } from 'date-fns'
 
 const NO_CACHE = `?timestamp=${new Date().getTime()}`
-const BRANCH = 'temp'
+const BRANCH = 'main'
 
 const INSTAGRAM_PATH = './instagram.json'
 
