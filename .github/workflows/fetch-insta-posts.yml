@@ -1,9 +1,6 @@
 name: Fetch instagram latest posts
 
-on:
-  push:
-    branches:
-      - gh-action-write-json
+on: workflow_dispatch
 
 jobs:
   build:
